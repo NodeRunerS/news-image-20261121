@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The World in One Page — 21 November 2026</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:1024px; height:1024px; background:#f6f1e7; }
+  body {
+    font-family:'Liberation Serif', 'Noto Serif', Georgia, serif;
+    color:#141414; padding:9px 24px 8px;
+  }
+  .sans { font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; }
+  .kicker { font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-size:11px;
+    font-weight:700; letter-spacing:2.2px; text-transform:uppercase; color:#b91c1c; }
+  .kicker .tag { color:#141414; }
+  h2 { font-weight:900; line-height:1.02; }
+  .deck { font-size:13px; line-height:1.32; }
+  .down { color:#b91c1c; }
+  .up { color:#1e7d32; }
+  .bignum { font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-weight:900; }
+
+  /* ---------- topline + masthead (left-aligned, with contents box) ---------- */
+  .topline { display:flex; justify-content:space-between;
+    font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-size:11px; font-weight:700;
+    letter-spacing:2.2px; text-transform:uppercase; padding:2px 0 5px;
+    border-top:2px solid #141414; }
+  .mast { display:flex; justify-content:space-between; align-items:flex-end; gap:18px; }
+  .mast h1 { font-size:46px; line-height:0.98; font-weight:900; letter-spacing:0.5px; white-space:nowrap; }
+  .mast h1 .thin { font-weight:400; }
+  .inbox { flex:none; width:252px; border:2px solid #141414; padding:6px 9px;
+    font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-size:11.5px; line-height:1.45; }
+  .inbox b { letter-spacing:2px; color:#b91c1c; }
+  .rule-double { border-top:4px solid #141414; border-bottom:1.5px solid #141414;
+    height:3px; margin:6px 0 0; }
+
+  /* ---------- slim ticker ---------- */
+  .ticker { display:flex; gap:8px; align-items:baseline; padding:4px 0 3px;
+    border-bottom:2px solid #141414;
+    font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-size:12.5px; line-height:1.35; }
+  .ticker .lbl { color:#b91c1c; font-weight:900; letter-spacing:2px; white-space:nowrap; }
+  .ticker b { color:#141414; }
+  .ticker .sep { color:#b91c1c; font-weight:900; }
+
+  /* ---------- lead row: lead 58% + second lead 42% ---------- */
+  .leadrow { display:flex; gap:0; padding:6px 0 5px; border-bottom:2px solid #141414; }
+  .lead { width:58%; padding-right:18px; }
+  .lead h2 { font-size:31px; margin:4px 0 5px; }
+  .lead .deck { font-size:14px; line-height:1.3; }
+  .lead .facts { margin-top:5px; border-top:1px solid #999; padding-top:4px;
+    font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-size:12.5px; line-height:1.35; }
+  .lead .facts b { color:#b91c1c; }
+  .lead .art { margin-top:6px; }
+  .lead .art svg { width:100%; height:44px; display:block; }
+  .second { width:42%; border-left:1px solid #999; padding-left:18px; }
+  .second h2 { font-size:23px; margin:4px 0 5px; }
+  .second .deck { font-size:13px; line-height:1.32; }
+  .second .art { margin-top:6px; }
+  .second .art svg { width:100%; height:44px; display:block; }
+
+  /* ---------- story grid: 2 rows x 3 cols ---------- */
+  .grid { padding:0; }
+  .grow { display:flex; gap:0; padding:6px 0 5px; border-bottom:2px solid #141414; }
+  .grow .cell { width:33.33%; padding:0 13px; }
+  .grow .cell + .cell { border-left:1px solid #999; }
+  .grow .cell:first-child { padding-left:0; }
+  .grow .cell:last-child { padding-right:0; }
+  .grow h2 { font-size:17.5px; margin:3px 0 4px; }
+  .grow .deck { font-size:12.5px; line-height:1.3; }
+  .grow .art { margin-top:5px; }
+  .grow .art svg { width:100%; height:20px; display:block; }
+
+  /* ---------- briefs + sports strips ---------- */
+  .strip { padding:5px 0 4px; border-bottom:2px solid #141414; }
+  .strip h3 { font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-size:12px;
+    letter-spacing:3px; color:#b91c1c; margin-bottom:4px; }
+  .strip p { font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-size:12.5px; line-height:1.45; }
+  .strip b { color:#141414; }
+  .strip .dot { color:#b91c1c; font-weight:900; }
+
+  /* ---------- markets / crypto / weather band ---------- */
+  .band { display:flex; gap:0; padding:6px 0 5px; border-bottom:2px solid #141414; }
+  .band .col { width:33.33%; padding:0 14px; }
+  .band .col + .col { border-left:1px solid #999; }
+  .band .col:first-child { padding-left:0; }
+  .band .col:last-child { padding-right:0; }
+  .band h3 { font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-size:12px;
+    letter-spacing:2.5px; color:#b91c1c; margin-bottom:3px; }
+  .band h3 .tag { color:#141414; letter-spacing:1px; font-size:10.5px; }
+  .mgrid { display:grid; grid-template-columns:1fr 1fr; gap:1px 12px; }
+  .mrow { display:flex; justify-content:space-between; font-family:'Liberation Sans','Noto Sans',Arial,sans-serif;
+    font-size:11px; line-height:1.45; white-space:nowrap; }
+  .mrow .nm { font-weight:700; }
+  .mrow .vl { font-weight:700; }
+  .mnote { font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-size:11px;
+    line-height:1.4; color:#444; margin-top:2px; }
+  .mnote b { color:#b91c1c; }
+  .spark { margin-top:4px; }
+  .spark svg { width:100%; height:18px; display:block; }
+  .wx { display:grid; grid-template-columns:1fr 1fr; gap:2px 10px; }
+  .wx .cell { display:flex; align-items:center; gap:5px;
+    font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-size:11.5px; line-height:1.35; }
+  .wx .cell svg { width:16px; height:16px; flex:none; }
+  .wx .cell b { font-weight:700; }
+
+  /* ---------- footer ---------- */
+  .foot { border-top:3px solid #141414; padding-top:5px; margin-top:6px; display:flex; justify-content:space-between;
+    font-family:'Liberation Sans','Noto Sans',Arial,sans-serif; font-size:11px; color:#555; }
+  .foot b { color:#141414; }
+</style>
+</head>
+<body>
+
+<!-- weather icon symbols -->
+<svg width="0" height="0" style="position:absolute" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <symbol id="w-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5" fill="#f2b234"/>
+      <g stroke="#f2b234" stroke-width="2"><line x1="12" y1="1" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="23"/><line x1="1" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="23" y2="12"/><line x1="4" y1="4" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="20" y2="20"/><line x1="20" y1="4" x2="17.5" y2="6.5"/><line x1="6.5" y1="17.5" x2="4" y2="20"/></g>
+    </symbol>
+    <symbol id="w-cloud" viewBox="0 0 24 24">
+      <g fill="#8a97a3"><ellipse cx="9" cy="15" rx="6" ry="4.5"/><ellipse cx="15" cy="13" rx="6.5" ry="5"/><ellipse cx="12" cy="10" rx="5" ry="4"/></g>
+    </symbol>
+    <symbol id="w-partly" viewBox="0 0 24 24">
+      <circle cx="9" cy="9" r="4" fill="#f2b234"/>
+      <g stroke="#f2b234" stroke-width="1.8"><line x1="9" y1="1" x2="9" y2="3.5"/><line x1="1.5" y1="9" x2="4" y2="9"/><line x1="3.5" y1="3.5" x2="5.2" y2="5.2"/></g>
+      <g fill="#8a97a3"><ellipse cx="12" cy="17" rx="6" ry="4.2"/><ellipse cx="17" cy="15" rx="5.5" ry="4.2"/></g>
+    </symbol>
+    <symbol id="w-rain" viewBox="0 0 24 24">
+      <g fill="#8a97a3"><ellipse cx="9" cy="10" rx="6" ry="4.5"/><ellipse cx="15" cy="9" rx="6" ry="4.5"/></g>
+      <g stroke="#3f7fb5" stroke-width="2"><line x1="8" y1="16" x2="7" y2="20"/><line x1="12" y1="16" x2="11" y2="20"/><line x1="16" y1="16" x2="15" y2="20"/></g>
+    </symbol>
+    <symbol id="w-storm" viewBox="0 0 24 24">
+      <g fill="#6b7780"><ellipse cx="9" cy="10" rx="6" ry="4.5"/><ellipse cx="15" cy="9" rx="6" ry="4.5"/></g>
+      <polygon points="12,14 8,20 11,20 9,24 15,17 12,17" fill="#f2b234"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="topline">
+  <span>Saturday, 21 November 2026</span>
+  <span>The world&rsquo;s news, drawn</span>
+  <span>No. 326 &middot; One page</span>
+</div>
+
+<div class="mast">
+  <h1>THE WORLD <span class="thin">IN ONE</span> PAGE</h1>
+  <div class="inbox"><b>IN TODAY&rsquo;S PAGE</b><br>
+    13 stories &middot; Markets &middot; Crypto &middot; Sport &middot; Weather<br>
+    Saturday&rsquo;s news, drawn &mdash; no photographs</div>
+</div>
+<div class="rule-double"></div>
+
+<div class="ticker">
+  <span class="lbl">LATEST &#9656;</span>
+  <span><b>Poland invokes Article 4</b> <span class="sep">&middot;</span>
+  <b>COP31: no deal</b> in overtime <span class="sep">&middot;</span>
+  <b>Bitcoin</b> two-year low, then $60k <span class="sep">&middot;</span>
+  <b>Stirling KOs Prochazka</b> in round 2</span>
+</div>
+
+<!-- LEAD + SECOND LEAD -->
+<div class="leadrow">
+  <div class="lead">
+    <div class="kicker">NATO <span class="tag">&middot; Lead story</span></div>
+    <h2>POLAND INVOKES ARTICLE 4 AS MISSILES LAND ON NATO SOIL</h2>
+    <p class="deck">Two Russian Kh-101 missiles and a jet-powered drone
+      fall in south-eastern Poland during the overnight barrage on
+      Ukraine. Warsaw calls it an intentional provocation, timed to
+      allied drills &mdash; and asks NATO for more air cover.</p>
+    <div class="facts"><b>Nowy Lipowiec &middot; Rudnik nad Sanem &middot; Mo&#322;odycz</b> &mdash; three impacts, no casualties</div>
+    <div class="art">
+      <svg viewBox="0 0 540 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <rect x="0" y="0" width="540" height="40" fill="#1c2733"/>
+        <g fill="#f6f1e7"><circle cx="40" cy="8" r="1.6"/><circle cx="120" cy="14" r="1.3"/><circle cx="220" cy="7" r="1.6"/><circle cx="330" cy="12" r="1.3"/><circle cx="430" cy="6" r="1.6"/><circle cx="500" cy="14" r="1.3"/><circle cx="180" cy="18" r="1.2"/><circle cx="290" cy="5" r="1.2"/></g>
+        <circle cx="505" cy="9" r="7" fill="#f2d38a"/>
+        <rect x="0" y="40" width="540" height="16" fill="#3d4a38"/>
+        <g fill="#e8a13a"><path d="M118 4 L121 10 L129 8 L124 14 L131 16 L122 17 L125 24 L118 19 L114 25 L111 17 L104 19 L109 12 L102 10 L111 9 L108 3 L115 7 Z"/><path d="M268 2 L271 8 L279 6 L274 12 L281 14 L272 15 L275 22 L268 17 L264 23 L261 15 L254 17 L259 10 L252 8 L261 7 L258 1 L265 5 Z"/><path d="M408 5 L411 11 L419 9 L414 15 L421 17 L412 18 L415 25 L408 20 L404 26 L401 18 L394 20 L399 13 L392 11 L401 10 L398 4 L405 8 Z"/></g>
+        <circle cx="120" cy="13" r="4" fill="#b91c1c"/><circle cx="270" cy="11" r="4" fill="#b91c1c"/><circle cx="410" cy="14" r="4" fill="#b91c1c"/>
+        <text x="270" y="53" font-family="Liberation Sans, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#f6f1e7" text-anchor="middle">POLAND &middot; THREE IMPACTS IN THE SOUTH-EAST, NEAR THE ALLIED DRILLS</text>
+      </svg>
+    </div>
+  </div>
+  <div class="second">
+    <div class="kicker">Climate <span class="tag">&middot; COP31, Antalya</span></div>
+    <h2>TALKS RUN INTO OVERTIME WITH NO DEAL AS FOSSIL FUELS ARE CUT</h2>
+    <p class="deck">The summit misses its Friday close and the final
+      plenary slips to Sunday. The draft names no coal, oil or gas and
+      drops the $120bn adaptation target; about 130 countries demand
+      the fossil-fuel language back.</p>
+    <div class="art">
+      <svg viewBox="0 0 380 52" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <rect x="0" y="0" width="380" height="52" fill="#dce8dd"/>
+        <circle cx="190" cy="27" r="20" fill="#7fa3bd"/>
+        <path d="M172 18 Q182 12 192 18 Q186 26 176 26 Z" fill="#4d7a4d"/>
+        <path d="M196 30 Q208 24 214 32 Q206 40 196 36 Z" fill="#4d7a4d"/>
+        <path d="M176 34 Q184 30 190 36 Q184 42 176 40 Z" fill="#4d7a4d"/>
+        <polyline points="190,8 186,18 194,24 188,32 196,44" fill="none" stroke="#b91c1c" stroke-width="2.5"/>
+        <circle cx="60" cy="14" r="8" fill="#f2d38a"/>
+        <g fill="#8a97a3"><ellipse cx="310" cy="14" rx="14" ry="7"/><ellipse cx="330" cy="18" rx="12" ry="6"/></g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- GRID ROW 1 -->
+<div class="grid">
+  <div class="grow">
+    <div class="cell">
+      <div class="kicker">Middle East <span class="tag">&middot; Gulf war</span></div>
+      <h2>TRUMP SAYS NEXT IRAN MOVE MAY WAIT UNTIL 2027</h2>
+      <p class="deck">Back from Shenzhen, Trump calls China&rsquo;s nuclear
+        build-up &ldquo;hot and heavy&rdquo;. The Hormuz blockade widens to
+        ship-to-ship transfers; Mossad warns of chemical-weapons work.</p>
+    </div>
+    <div class="cell">
+      <div class="kicker">Tech <span class="tag">&middot; Nvidia</span></div>
+      <h2>BOARD REFUSES TO BRING HUANG BACK AS CEO</h2>
+      <p class="deck">Chair Harvey Jones says the board does not intend
+        to reinstate Jensen Huang, despite Trump&rsquo;s call and a
+        165,000-signature petition. Huang testifies to Congress on 1 Dec.</p>
+    </div>
+    <div class="cell">
+      <div class="kicker">Business <span class="tag">&middot; Markets</span></div>
+      <h2>ANTHROPIC SINKS 9% ON DAY TWO AS AI SELL-OFF DEEPENS</h2>
+      <p class="deck">A day after debuting up 17%, Anthropic falls 9%.
+        The Nasdaq is down 5.3% and the S&amp;P 500 is in correction;
+        chips suffer their worst week since 2001.</p>
+      <div class="art">
+        <svg viewBox="0 0 300 26" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <polyline points="8,4 60,8 110,10 160,15 210,19 288,23" fill="none" stroke="#b91c1c" stroke-width="3.5"/>
+          <polygon points="288,23 274,19 282,12" fill="#b91c1c"/>
+          <circle cx="8" cy="4" r="3" fill="#b91c1c"/><circle cx="160" cy="15" r="3" fill="#b91c1c"/>
+          <text x="8" y="24" font-family="Liberation Sans, Arial, sans-serif" font-size="10" font-weight="900" fill="#b91c1c">&minus;9% &middot; NASDAQ: ANT</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <!-- GRID ROW 2 -->
+  <div class="grow">
+    <div class="cell">
+      <div class="kicker">Crypto <span class="tag">&middot; Markets</span></div>
+      <h2>BITCOIN HITS TWO-YEAR LOW, THEN CLAWS BACK ABOVE $60,000</h2>
+      <p class="deck">Bitcoin falls to about <span class="bignum">$55,130</span>,
+        its lowest since September 2024, then rebounds more than 8%.
+        Ether sinks to $1,543 before recovering to $1,682.</p>
+    </div>
+    <div class="cell">
+      <div class="kicker">Americas <span class="tag">&middot; Venezuela</span></div>
+      <h2>US INKS MILITARY PARTNERSHIP WITH VENEZUELA&rsquo;S ACTING LEADER</h2>
+      <p class="deck">Defence chief Hegseth announces a partnership with
+        acting President Delcy Rodriguez after Maduro&rsquo;s removal,
+        and argues Venezuelan oil eases the Hormuz problem.</p>
+    </div>
+    <div class="cell">
+      <div class="kicker">Europe <span class="tag">&middot; Security</span></div>
+      <h2>PLOT TO KILL A US-UKRAINIAN RAPPER IN DENMARK IS THWARTED</h2>
+      <p class="deck">Danish authorities say a Moscow-linked plot to kill
+        rapper Kyivstoner on Danish soil was stopped in September.
+        Poland backs curbs on Russian nationals&rsquo; EU travel.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ALSO IN BRIEF -->
+<div class="strip">
+  <h3>ALSO IN BRIEF</h3>
+  <p><b>Shenzhen declaration:</b> four points, no deal on Ukraine, Iran or Taiwan
+  <span class="dot">&nbsp;&middot;&nbsp;</span> <b>Trump:</b> US needs no help from Russia or China to end the Iran war
+  <span class="dot">&nbsp;&middot;&nbsp;</span> <b>Huang</b> testifies to Congress on 1 Dec
+  <span class="dot">&nbsp;&middot;&nbsp;</span> <b>Next COP:</b> Addis Ababa, November 2027
+  <span class="dot">&nbsp;&middot;&nbsp;</span> <b>Colts waive QB Daniel Jones;</b> Richardson to start</p>
+</div>
+
+<!-- SPORT -->
+<div class="strip">
+  <h3>SPORT</h3>
+  <p><b>76ers 132&ndash;129</b> Bucks &mdash; Embiid 26+17, Herro&rsquo;s career-high 50 in vain
+  <span class="dot">&nbsp;&middot;&nbsp;</span> <b>Spurs 114&ndash;91</b> Pelicans &mdash; Wembanyama 32 in the first half
+  <span class="dot">&nbsp;&middot;&nbsp;</span> <b>Knicks 97&ndash;96</b> Trail Blazers
+  <span class="dot">&nbsp;&middot;&nbsp;</span> <b>Newcastle 2&ndash;2</b> Arsenal &middot; <b>Chelsea 1&ndash;4</b> Leeds &middot; <b>Man City 1&ndash;1</b> Fulham
+  <span class="dot">&nbsp;&middot;&nbsp;</span> <b>Alcaraz</b> beats Shelton, <b>Zverev</b> beats Medvedev &mdash; ATP Finals final on Sunday
+  <span class="dot">&nbsp;&middot;&nbsp;</span> <b>Stirling KOs Prochazka</b> in round 2 at UFC Qatar
+  <span class="dot">&nbsp;&middot;&nbsp;</span> <b>Rutgers stuns Penn State 25&ndash;24</b> on a lateral TD and walk-off two-pointer</p>
+</div>
+
+<!-- MARKETS / CRYPTO / WEATHER BAND -->
+<div class="band">
+  <div class="col">
+    <h3>MARKETS <span class="tag">&middot; CLOSED SAT &middot; FRI CLOSE</span></h3>
+    <div class="mgrid">
+      <div class="mrow"><span class="nm">S&amp;P 500</span><span class="vl down">6,910.39 &minus;3.70%</span></div>
+      <div class="mrow"><span class="nm">Nasdaq</span><span class="vl down">22,617.73 &minus;5.28%</span></div>
+      <div class="mrow"><span class="nm">Dow</span><span class="vl down">48,147.33 &minus;1.93%</span></div>
+      <div class="mrow"><span class="nm">Russell 2000</span><span class="vl down">2,581.79 &minus;2.76%</span></div>
+      <div class="mrow"><span class="nm">FTSE 100</span><span class="vl down">10,346.34 &minus;1.02%</span></div>
+      <div class="mrow"><span class="nm">DAX</span><span class="vl down">24,802.78 &minus;2.60%</span></div>
+      <div class="mrow"><span class="nm">CAC 40</span><span class="vl down">7,927.75 &minus;1.89%</span></div>
+      <div class="mrow"><span class="nm">Nikkei 225</span><span class="vl down">56,436.65 &minus;5.06%</span></div>
+      <div class="mrow"><span class="nm">Shanghai</span><span class="vl down">3,533.79 &minus;1.22%</span></div>
+      <div class="mrow"><span class="nm">Hang Seng</span><span class="vl down">22,410.80 &minus;1.89%</span></div>
+      <div class="mrow"><span class="nm">BIST 100</span><span class="vl down">11,131.32 &minus;2.36%</span></div>
+      <div class="mrow"><span class="nm">Nifty 50</span><span class="vl up">25,800.60 +1.12%</span></div>
+    </div>
+    <p class="mnote">Gold <b class="down">$3,515.40 &minus;4.62%</b> &middot; Silver <b class="down">$41.07 &minus;7.41%</b> &middot; Brent <b class="up">$92.57 +0.64%</b> &middot; WTI <b class="up">$83.98 +0.93%</b> &middot; VIX <b>35.89</b></p>
+    <p class="mnote"><b>Week:</b> worst in 18 months &mdash; S&amp;P &minus;8.61%, Nasdaq &minus;10.02%, seventh straight loss.</p>
+  </div>
+  <div class="col">
+    <h3>CRYPTO <span class="tag">&middot; SAT 21 NOV</span></h3>
+    <div class="mrow"><span class="nm">Bitcoin</span><span class="vl up">$60,085 &nbsp;+2.1%</span></div>
+    <div class="mrow"><span class="nm">Ethereum</span><span class="vl up">$1,682 &nbsp;+3.7%</span></div>
+    <div class="mrow"><span class="nm">Solana</span><span class="vl up">$70.15 &nbsp;+2.1%</span></div>
+    <div class="mrow"><span class="nm">XRP</span><span class="vl up">$0.9304 &nbsp;+2.4%</span></div>
+    <div class="mrow"><span class="nm">BNB</span><span class="vl up">~$549 &nbsp;+1.7%</span></div>
+    <p class="mnote"><b>BTC fell to ~$55,130</b> &mdash; lowest since Sept 2024 &mdash; then rebounded above $60,000.</p>
+    <div class="spark">
+      <svg viewBox="0 0 280 24" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <polyline points="4,6 50,10 95,14 140,21 185,15 230,9 276,4" fill="none" stroke="#1e7d32" stroke-width="3"/>
+        <polygon points="276,4 262,5 270,13" fill="#1e7d32"/>
+        <circle cx="4" cy="6" r="3" fill="#b91c1c"/><circle cx="140" cy="21" r="3" fill="#b91c1c"/>
+      </svg>
+    </div>
+  </div>
+  <div class="col">
+    <h3>WORLD WEATHER <span class="tag">&middot; SUN 22 NOV</span></h3>
+    <div class="wx">
+      <div class="cell"><svg><use href="#w-cloud"/></svg><span><b>London</b> 8&deg;/4&deg;</span></div>
+      <div class="cell"><svg><use href="#w-partly"/></svg><span><b>New York</b> 15&deg;/10&deg;</span></div>
+      <div class="cell"><svg><use href="#w-partly"/></svg><span><b>Istanbul</b> 16&deg;/12&deg;</span></div>
+      <div class="cell"><svg><use href="#w-sun"/></svg><span><b>Tokyo</b> 13&deg;/4&deg;</span></div>
+      <div class="cell"><svg><use href="#w-sun"/></svg><span><b>Dubai</b> 32&deg;/21&deg;</span></div>
+      <div class="cell"><svg><use href="#w-cloud"/></svg><span><b>Moscow</b> 2&deg;/&minus;1&deg;</span></div>
+      <div class="cell"><svg><use href="#w-rain"/></svg><span><b>Paris</b> 8&deg;/7&deg;</span></div>
+      <div class="cell"><svg><use href="#w-cloud"/></svg><span><b>Berlin</b> 4&deg;/1&deg;</span></div>
+      <div class="cell"><svg><use href="#w-sun"/></svg><span><b>Madrid</b> 14&deg;/5&deg;</span></div>
+      <div class="cell"><svg><use href="#w-sun"/></svg><span><b>Cairo</b> 27&deg;/17&deg;</span></div>
+      <div class="cell"><svg><use href="#w-sun"/></svg><span><b>Delhi</b> 26&deg;/14&deg;</span></div>
+      <div class="cell"><svg><use href="#w-sun"/></svg><span><b>Beijing</b> 6&deg;/&minus;5&deg;</span></div>
+    </div>
+    <p class="mnote">London overcast &middot; New York, Istanbul partly cloudy &middot; Tokyo, Dubai, Madrid, Cairo, Delhi, Beijing sunny &middot; Moscow, Berlin cloudy &middot; Paris rain.</p>
+  </div>
+</div>
+
+<div class="foot">
+  <span><b>Sources:</b> Reuters, AP, AFP, Bloomberg, BBC, UFC, ATP</span>
+  <span>An original front page, drawn for make.fun &middot; No photographs</span>
+</div>
+
+</body>
+</html>
